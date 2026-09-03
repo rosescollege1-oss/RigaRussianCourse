@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#9d424a" />
+  <title>До Риги! • Russian to B2</title>
+  <meta name="description" content="A shared intensive Russian course from beginner through B2, with a Riga sprint, grammar labs, quizzes and shared progress." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">Д</div>
+        <div><strong>До Риги!</strong><small>Russian to B2 • Riga sprint + continuation</small></div>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-view="dashboard" class="active">Dashboard</button>
+        <button data-view="course">Course</button>
+        <button data-view="practice">Practice</button>
+        <button data-view="riga">Riga Kit</button>
+        <button data-view="resources">Resources</button>
+        <button data-view="setup">Setup</button>
+      </nav>
+      <div class="user-tools">
+        <span class="sync-badge" id="syncBadge">Local demo</span>
+        <select class="profile-select" id="profileSelect"></select>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="view active" id="view-dashboard">
+      <div class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">Три человека • одна цель</div>
+          <h1>Russian that keeps going past survival mode.</h1>
+          <p class="hero-copy">A 13-week Riga sprint followed by an 11-week B2 continuation: detailed grammar, hundreds of vocabulary cards, sentence-building drills, diagnostic feedback, travel simulations, pronunciation practice, and a shared team dashboard.</p>
+          <div class="hero-actions">
+            <button class="btn primary" data-jump="course">Continue course</button>
+            <button class="btn ghost" data-jump="practice">Practice now</button>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div>
+            <div class="eyebrow">Readiness deadline</div>
+            <div class="countdown" id="daysLeft">—</div>
+            <div class="muted">days until your readiness deadline</div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px"><strong id="heroName">Your progress</strong><strong id="heroPct">0%</strong></div>
+            <div class="progress-track"><div class="progress-fill" id="heroProgress"></div></div>
+            <p class="muted" style="font-size:13px;margin-bottom:0">Riga sprint: aim for strong B1 / emerging B2 skills by departure. Full B2 is the continuation target; returning learners can move faster through material they already control.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric"><span>Sessions done</span><strong id="metricSessions">0/192</strong></div>
+        <div class="metric"><span>Quiz average</span><strong id="metricQuiz">—</strong></div>
+        <div class="metric"><span>Study days</span><strong id="metricDays">0</strong></div>
+        <div class="metric"><span>Current week</span><strong id="metricWeek">1</strong></div>
+        <div class="metric"><span>Vocab cards</span><strong id="metricVocab">—</strong></div>
+        <div class="metric"><span>Sentence builders</span><strong id="metricBuilders">—</strong></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="eyebrow">Team</div>
+          <h2>Everybody can see everybody.</h2>
+          <p class="muted">Progress updates live once Firebase is connected. In local demo mode, each browser keeps its own copy.</p>
+          <div id="teamRows"></div>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Roadmap</div>
+          <h2>What comes next</h2>
+          <div class="week-list" id="dashboardWeeks"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-course">
+      <div class="course-header">
+        <div><div class="eyebrow">24 weeks • 192 sessions • B2 continuation</div><h2>Complete course</h2><p class="muted">Weeks 1–13 are the Riga sprint. Weeks 14–24 deepen B1 into B2 with advanced grammar, connected discourse, authentic input, and denser assessment.</p></div>
+        <button class="btn ghost" id="expandAll">Expand all</button>
+      </div>
+      <div id="courseWeeks"></div>
+    </section>
+
+    <section class="view" id="view-practice">
+      <div class="course-header"><div><div class="eyebrow">Retrieval + production</div><h2>Practice room</h2><p class="muted">Flashcards, drag-and-drop sentence building, targeted grammar reference, review quizzes, pronunciation and speaking. This is where recognition turns into usable Russian.</p></div></div>
+
+      <div class="practice-tabs" id="practiceTabs">
+        <button class="practice-tab active" data-practice-tab="flash">Flashcards</button>
+        <button class="practice-tab" data-practice-tab="sentences">Sentence Lab</button>
+        <button class="practice-tab" data-practice-tab="grammar">Grammar Lab</button>
+        <button class="practice-tab" data-practice-tab="review">Review Quizzes</button>
+        <button class="practice-tab" data-practice-tab="speaking">Speaking + CEFR</button>
+      </div>
+
+      <div class="practice-panel active" id="practice-flash">
+        <div class="flash-grid">
+          <div>
+            <div class="card flashcard" id="flashcard">
+              <div class="flash-meta" id="flashMeta">Course vocabulary</div>
+              <div class="big-ru" id="flashRu">Привет</div>
+              <div class="meaning" id="flashEn">Hi</div>
+              <button class="speak" id="flashSpeak" aria-label="Speak Russian">🔊</button>
+              <small>Tap card to reveal</small>
+            </div>
+            <div class="practice-actions">
+              <button class="btn" id="missedCard">Again</button>
+              <button class="btn primary" id="knewCard">Got it</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Huge vocabulary bank</div>
+            <h2 id="vocabBankTitle">Vocabulary decks</h2>
+            <p class="muted">Choose a deck or mix everything. Cards include the weekly curriculum plus extra thematic decks for travel, winter Riga, health, work, conversation and B2 discourse.</p>
+            <label class="field-label" for="vocabDeckSelect">Deck</label>
+            <select class="input" id="vocabDeckSelect"></select>
+            <div class="stat-strip">
+              <div><span>Known</span><strong id="flashKnownStat">0</strong></div>
+              <div><span>Again</span><strong id="flashMissedStat">0</strong></div>
+              <div><span>Available</span><strong id="flashAvailableStat">0</strong></div>
+            </div>
+            <p class="muted small-copy">Best use: say the Russian aloud first, reveal it, then make a new sentence using the word. Mark “Got it” only if you could retrieve the meaning without guessing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-panel" id="practice-sentences">
+        <div class="grid-2">
+          <div class="card sentence-card">
+            <div class="eyebrow">Drag, tap, build</div>
+            <h2>Build the Russian sentence</h2>
+            <div class="sentence-meta" id="sentenceMeta"></div>
+            <div class="sentence-prompt" id="sentencePrompt">Loading…</div>
+            <div class="drop-zone" id="sentenceAnswer" aria-label="Your sentence"></div>
+            <div class="word-bank" id="wordBank" aria-label="Word bank"></div>
+            <div class="practice-actions left">
+              <button class="btn primary" id="checkSentence">Check sentence</button>
+              <button class="btn" id="resetSentence">Reset</button>
+              <button class="btn ghost" id="newSentence">New sentence</button>
+            </div>
+            <div class="answer-feedback" id="sentenceFeedback"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Sentence filters</div>
+            <h2>Target the material</h2>
+            <label class="field-label" for="sentenceWeekSelect">Week / level</label>
+            <select class="input" id="sentenceWeekSelect"></select>
+            <div class="stat-strip">
+              <div><span>Correct</span><strong id="sentenceCorrectStat">0</strong></div>
+              <div><span>Attempts</span><strong id="sentenceAttemptStat">0</strong></div>
+              <div><span>Accuracy</span><strong id="sentenceAccuracyStat">—</strong></div>
+            </div>
+            <h3 style="margin-top:24px">How to use it</h3>
+            <ul class="note-list">
+              <li>On desktop, drag words into the answer. On phones, tap words to move them.</li>
+              <li>If you miss one, the app shows the correct sentence. Reset it and rebuild it from memory before moving on.</li>
+              <li>Read the finished sentence aloud twice so word order and case endings become a chunk, not a puzzle.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-panel" id="practice-grammar">
+        <div class="course-header compact"><div><div class="eyebrow">20 detailed references</div><h2>Grammar Lab</h2><p class="muted">Use this as the course handbook: rules, examples, common traps and upper-intermediate structures in one place.</p></div></div>
+        <div class="grammar-grid" id="grammarGrid"></div>
+      </div>
+
+      <div class="practice-panel" id="practice-review">
+        <div class="grid-2">
+          <div class="card">
+            <div class="eyebrow">Target weak spots</div>
+            <h2>Review quizzes</h2>
+            <p class="muted">These are separate from weekly quizzes and can be repeated as often as you want.</p>
+            <label class="field-label" for="reviewQuizSelect">Quiz</label>
+            <select class="input" id="reviewQuizSelect"></select>
+            <button class="btn primary" id="loadReviewQuiz" style="margin-top:12px">Load quiz</button>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Your review scores</div>
+            <h2>Mastery record</h2>
+            <div id="reviewScoreList" class="review-score-list"></div>
+          </div>
+        </div>
+        <div class="card review-quiz-card" id="reviewQuizCard" style="margin-top:22px;display:none"></div>
+      </div>
+
+      <div class="practice-panel" id="practice-speaking">
+        <div class="grid-2">
+          <div class="card">
+            <div class="eyebrow">Speaking roulette</div>
+            <h2>No script. Go.</h2>
+            <div class="prompt" id="speakingPrompt"></div>
+            <p class="muted">Set a 2–5 minute timer. Your partners should only interrupt for a breakdown in meaning; collect corrections afterward.</p>
+            <button class="btn primary" id="newPrompt">New prompt</button>
+            <hr style="border:0;border-top:1px solid var(--line);margin:24px 0">
+            <h3>Pronunciation rule</h3>
+            <p class="muted">The 🔊 button uses your device's Russian text-to-speech voice. Use native audio on the linked university resources/Forvo to verify unfamiliar stress and pronunciation.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Riga checkpoint</div><h2>B1 travel independence</h2>
+            <div id="cefrChecklist"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:22px">
+          <div class="eyebrow">Full course target</div><h2>B2 upper-intermediate checkpoint</h2>
+          <div id="b2Checklist"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-riga">
+      <div class="course-header"><div><div class="eyebrow">Emergency retrieval kit</div><h2>Riga phrasebook</h2><p class="muted">High-value phrases to make automatic before departure. Tap the speaker to hear your device's Russian voice.</p></div></div>
+      <div class="card" style="margin-bottom:18px">
+        <h3>One cultural rule worth remembering</h3>
+        <p class="muted" style="margin-bottom:0">Latvian is the official language of Latvia. Russian is commonly understood in Riga, but language preference is personal and context-dependent. Start courteously, be flexible, and switch based on the person you're talking with—not on assumptions.</p>
+      </div>
+      <div class="riga-grid" id="rigaGrid"></div>
+    </section>
+
+    <section class="view" id="view-resources">
+      <div class="course-header"><div><div class="eyebrow">Free + cross-checked</div><h2>Resource library</h2><p class="muted">The course is self-contained enough to guide you, but these are the outside sources used for deeper drills, native audio, grammar checks, and the CEFR target.</p></div></div>
+      <div class="resource-grid" id="resourceGrid"></div>
+    </section>
+
+    <section class="view" id="view-setup">
+      <div class="course-header"><div><div class="eyebrow">GitHub Pages + Firebase</div><h2>Shared progress setup</h2><p class="muted">GitHub hosts the website. Firebase stores only the small amount of progress data the three of you share.</p></div></div>
+      <div class="setup-grid">
+        <div class="card">
+          <h3>1. Firebase status</h3>
+          <div class="status-box" id="firebaseStatus">Checking…</div>
+          <p class="muted">If this says local demo, follow the README and paste your Firebase Web App config into <code>firebase-config.js</code>.</p>
+          <h3 style="margin-top:22px">2. Private group code</h3>
+          <input class="input" id="groupCode" type="password" autocomplete="off" placeholder="Same long private phrase on all 3 devices" />
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn primary" id="connectGroup">Save / connect group</button>
+            <button class="btn ghost" id="forgetGroup">Forget group on this device</button>
+          </div>
+          <p class="muted" style="font-size:13px">The raw code is never sent to Firestore; the browser hashes it first. Still, use a long phrase rather than a 4-digit PIN.</p>
+        </div>
+        <div class="card">
+          <h3>Security rules</h3>
+          <p class="muted">Publish the included <code>firestore.rules</code>. Do not use Firestore “test mode” rules on a public GitHub site.</p>
+          <div class="code">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /groups/{groupId} {
+      allow get, create, update: if request.auth != null;
+      allow list, delete: if false;
+      match /profiles/{profileId} {
+        allow get, list, create, update: if request.auth != null
+          &amp;&amp; profileId in ['rose','aiden','adrian'];
+        allow delete: if false;
+      }
+    }
+  }
+}</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:22px">
+        <h3>Trip date</h3>
+        <p class="muted">Default is December 1, 2026 as the readiness deadline. If your actual flight is later, change it here; with shared sync, the date is shared.</p>
+        <div style="display:flex;gap:10px;max-width:420px"><input class="input" id="tripDate" type="date" /><button class="btn primary" id="saveTripDate">Save</button></div>
+      </div>
+    </section>
+
+    <div class="footer-note">До Риги! • Built for practical travel Russian, not perfection.</div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="data.js"></script>
+  <script src="expansion.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
